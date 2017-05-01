@@ -7,7 +7,7 @@
   "author": "Mauro Junior <mauropereirajr@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@funjs/emitter": "^1.1.0",
+    "@funjs/emitter": "^1.2.0",
     "mongodb": "^2.2.26"
   },
   "keywords": [
@@ -50,7 +50,7 @@
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "devDependencies": {
-    "@types/node": "^7.0.14",
+    "@types/node": "^7.0.15",
     "babel-cli": "^6.24.1",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-env": "^1.4.0",
