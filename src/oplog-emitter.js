@@ -1,9 +1,6 @@
-'use strict';
+import * as util from 'util';
 
-const util = require('util');
-
-const Emitter = require('@funjs/emitter');
-const Timestamp = require('mongodb').Timestamp;
+import { Timestamp } from 'mongodb';
 
 const [INSERT, UPDATE, REMOVE] = ['i', 'u', 'd'];
 const operationsNames = {
@@ -13,12 +10,15 @@ const operationsNames = {
 };
 const noop = () => {};
 
-module.exports = Object.freeze(OplogObserver);
+export default Object.freeze(OplogObserver);
 
-function OplogObserver(dbConn) {
+/**
+ * @param {any} dbConn
+ * @returns
+ */
+function OplogObserver(dbConn, emitter) {
   let currentCursor;
 
-  const emitter = Emitter();
   const queryObj = {};
   const dbName = dbConn.databaseName;
   const db = dbConn.db('local');
@@ -47,8 +47,8 @@ function OplogObserver(dbConn) {
   /**
    * add operations listeners
    *
-   * @param {any} nsOp
-   * @param {any} listener
+   * @param {string} nsOp
+   * @param {function} listener
    */
   function on(nsOps, listener) {
     const [ns, op] = parseNamespace(nsOps);
@@ -57,10 +57,10 @@ function OplogObserver(dbConn) {
       if (currentCursor !== undefined) {
         currentCursor.close((err) => {
           if (err) {
-            return emitter.emit('error', err);
+            return emitter.emit('db/error', err);
           }
 
-          observe(err => err && emitter.emit('error', err));
+          observe(err => err && emitter.emit('db/error', err));
         });
       }
     });

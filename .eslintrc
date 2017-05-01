@@ -9,7 +9,7 @@
   },
   "parserOptions": {
     "ecmaVersion": 7,
-    "sourceType": "script",
+    "sourceType": "module",
     "ecmaFeatures": {
       "impliedStrict": false
     }
